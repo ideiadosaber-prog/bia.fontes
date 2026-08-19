@@ -36,6 +36,8 @@
   .live-dot{animation:pulseDot 1.4s ease-in-out infinite}
   .price-card{transition:transform .3s,border-color .3s,box-shadow .3s}
   .price-card:hover{transform:translateY(-6px);border-color:rgba(251,191,36,.5);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+  .price-card:hover .art{transform:scale(1.04)}
+  .art{transition:transform .6s ease}
   .faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
   .faq-item.open .faq-body{grid-template-rows:1fr}
   .faq-item.open .faq-chev{transform:rotate(180deg)}
@@ -56,26 +58,24 @@
 <div class="blob w-[30rem] h-[30rem] bg-amber-500" style="bottom:-160px;right:-140px;opacity:.14;animation-delay:-6s"></div>
 <div class="blob w-80 h-80 bg-violet-600" style="top:45%;left:48%;opacity:.12;animation-delay:-11s"></div>
 
-<!-- NAV ATUALIZADO -->
+<!-- NAV -->
 <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#060a13]/75 border-b border-white/10">
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-3">
     <div class="flex items-center gap-3 min-w-0">
       <img src="https://image.qwenlm.ai/public_source/fd7bd726-1449-4f74-ab7a-dbbc0e4c8e45/1bf7dfc03-e0aa-4b06-9596-d141f820a9d4.png"
+           onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23052e25%22/><text x=%2250%22 y=%2264%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22%2334d399%22 font-family=%22sans-serif%22 font-weight=%22bold%22>BF</text></svg>'"
            alt="Bia Fontes" class="w-10 h-10 rounded-full object-cover object-top border-2 border-emerald-400/70 shrink-0">
       <div class="min-w-0">
         <p class="font-display font-bold leading-tight truncate">Bia Fontes</p>
         <p class="text-[11px] text-emerald-300/80 truncate">@biafontes.digital</p>
       </div>
     </div>
-
-    <!-- MENU DE NAVEGAÇÃO NOVO -->
     <nav class="hidden md:flex items-center gap-6 text-xs text-white/60">
       <a href="ebook/" class="nav-link">📗 Ebook</a>
       <a href="curso/" class="nav-link">🎓 Curso</a>
       <a href="mentoria/" class="nav-link">👑 Mentoria</a>
       <a href="#aula" class="nav-link">🎬 Aula grátis</a>
     </nav>
-
     <div class="hidden md:flex items-center gap-2 text-xs text-white/60">
       <span class="w-2 h-2 rounded-full bg-emerald-400 live-dot"></span>
       <span><b id="navFollowers" class="text-white">412.318</b> seguidores</span>
@@ -121,6 +121,7 @@
     <div class="ring-grad floaty max-w-sm mx-auto">
       <div class="relative rounded-[1.6rem] overflow-hidden bg-[#0a1210]">
         <img src="https://image.qwenlm.ai/public_source/fd7bd726-1449-4f74-ab7a-dbbc0e4c8e45/174f82352-258a-48d1-9492-7524b9d299f6.png"
+             onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 500%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%22 stop-color=%22%2306281c%22/><stop offset=%221%22 stop-color=%22%2305070d%22/></linearGradient></defs><rect width=%22400%22 height=%22500%22 fill=%22url(%23g)%22/><circle cx=%22200%22 cy=%22190%22 r=%2290%22 fill=%22%2334d399%22 opacity=%22.18%22/><text x=%22200%22 y=%22215%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%2334d399%22 font-family=%22sans-serif%22 font-weight=%22bold%22>BF</text><text x=%22200%22 y=%22340%22 font-size=%2230%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22sans-serif%22 font-weight=%22bold%22>Bia Fontes</text><text x=%22200%22 y=%22375%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2334d399%22 font-family=%22sans-serif%22>Especialista em Infoprodutos</text></svg>'"
              alt="Bia Fontes — retrato oficial" class="w-full aspect-[4/5] object-cover" style="object-position:top center">
         <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/85 to-transparent"></div>
         <div class="absolute bottom-4 left-5 right-5 flex items-end justify-between">
@@ -157,7 +158,7 @@
   </div>
 </section>
 
-<!-- PRODUTOS - BOTÕES APONTANDO PARA AS PÁGINAS REAIS -->
+<!-- PRODUTOS COM ARTES SVG (NUNCA QUEBRAM) -->
 <section id="produtos" class="relative z-10 max-w-6xl mx-auto px-5 pb-20">
   <div class="text-center mb-10">
     <p class="text-xs uppercase tracking-widest text-emerald-300">🛒 Vitrine digital</p>
@@ -166,9 +167,32 @@
   </div>
 
   <div class="grid md:grid-cols-3 gap-6">
+
     <!-- EBOOK -->
     <article class="price-card glass overflow-hidden flex flex-col">
-      <img src="https://image.qwenlm.ai/public_source/663f602e-79cd-401f-9708-153b858c6cd8/111b4a96d-b446-4d88-97b3-78e2e25e3784.png" alt="Ebook Máquina de Infoprodutos" class="w-full aspect-[4/3] object-cover" loading="lazy">
+      <div class="w-full aspect-[4/3] overflow-hidden">
+        <svg class="art w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Capa do ebook Máquina de Infoprodutos">
+          <defs>
+            <linearGradient id="ebBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06281c"/><stop offset="1" stop-color="#05070d"/></linearGradient>
+            <linearGradient id="ebCov" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#ebBg)"/>
+          <circle cx="345" cy="35" r="95" fill="#34d399" opacity=".08"/>
+          <circle cx="55" cy="265" r="75" fill="#fbbf24" opacity=".07"/>
+          <text x="26" y="42" font-family="Inter,sans-serif" font-size="12" letter-spacing="4" fill="#34d399">EBOOK</text>
+          <g transform="rotate(-4 200 150)">
+            <rect x="128" y="52" width="146" height="196" rx="10" fill="#04241a" opacity=".6"/>
+            <rect x="122" y="46" width="146" height="196" rx="10" fill="url(#ebCov)"/>
+            <rect x="122" y="46" width="16" height="196" rx="8" fill="#04241a" opacity=".5"/>
+            <rect x="156" y="78" width="86" height="8" rx="4" fill="#04241a" opacity=".45"/>
+            <text x="156" y="124" font-family="Sora,sans-serif" font-weight="800" font-size="16" fill="#04241a">MÁQUINA DE</text>
+            <text x="156" y="146" font-family="Sora,sans-serif" font-weight="800" font-size="16" fill="#04241a">INFOPRODUTOS</text>
+            <rect x="156" y="164" width="62" height="6" rx="3" fill="#fbbf24"/>
+            <text x="156" y="222" font-family="Inter,sans-serif" font-size="11" letter-spacing="2" fill="#04241a" opacity=".75">BIA FONTES</text>
+          </g>
+          <text x="26" y="272" font-family="Inter,sans-serif" font-size="11" fill="#ffffff" opacity=".5">30 dias · método completo</text>
+        </svg>
+      </div>
       <div class="p-6 flex flex-col flex-1">
         <p class="text-xs text-emerald-300 uppercase tracking-widest">Entrada · Ebook</p>
         <h3 class="font-display font-bold text-lg mt-1">Máquina de Infoprodutos</h3>
@@ -188,8 +212,23 @@
 
     <!-- CURSO -->
     <article class="price-card glass overflow-hidden flex flex-col border-amber-400/40" style="box-shadow:0 0 46px rgba(251,191,36,.14)">
-      <div class="relative">
-        <img src="https://image.qwenlm.ai/public_source/663f602e-79cd-401f-9708-153b858c6cd8/1a4936f6c-8315-45c2-8a42-6756d332736c.png" alt="Curso Infoprodutor Pro" class="w-full aspect-[4/3] object-cover" loading="lazy">
+      <div class="relative w-full aspect-[4/3] overflow-hidden">
+        <svg class="art w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Capa do curso Infoprodutor Pro">
+          <defs>
+            <linearGradient id="cuBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a05"/><stop offset="1" stop-color="#05070d"/></linearGradient>
+            <linearGradient id="cuG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#cuBg)"/>
+          <circle cx="60" cy="40" r="90" fill="#fbbf24" opacity=".08"/>
+          <circle cx="350" cy="260" r="85" fill="#34d399" opacity=".07"/>
+          <circle cx="200" cy="118" r="52" fill="none" stroke="url(#cuG)" stroke-width="3" opacity=".5"/>
+          <circle cx="200" cy="118" r="40" fill="url(#cuG)"/>
+          <path d="M190 100 L222 118 L190 136 Z" fill="#221503"/>
+          <text x="200" y="212" text-anchor="middle" font-family="Sora,sans-serif" font-weight="800" font-size="24" fill="#ffffff">INFOPRODUTOR PRO</text>
+          <rect x="150" y="228" width="100" height="5" rx="2.5" fill="url(#cuG)"/>
+          <text x="200" y="262" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" letter-spacing="2" fill="#fbbf24">8 MÓDULOS · 60+ AULAS</text>
+          <text x="200" y="284" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#ffffff" opacity=".5">com certificado · acesso vitalício</text>
+        </svg>
         <span class="absolute top-3 right-3 btn-gold rounded-full px-3 py-1 text-[11px] font-extrabold">🏆 MAIS VENDIDO</span>
       </div>
       <div class="p-6 flex flex-col flex-1">
@@ -211,7 +250,24 @@
 
     <!-- MENTORIA -->
     <article class="price-card glass overflow-hidden flex flex-col">
-      <img src="https://image.qwenlm.ai/public_source/663f602e-79cd-401f-9708-153b858c6cd8/13e99972f-712e-4156-a46b-6d6d78854f3a.png" alt="Mentoria Elite Digital" class="w-full aspect-[4/3] object-cover" loading="lazy">
+      <div class="w-full aspect-[4/3] overflow-hidden">
+        <svg class="art w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Capa da mentoria Elite Digital">
+          <defs>
+            <linearGradient id="meBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b0f3a"/><stop offset="1" stop-color="#05070d"/></linearGradient>
+            <linearGradient id="meG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#fbbf24"/></linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#meBg)"/>
+          <circle cx="340" cy="50" r="95" fill="#a78bfa" opacity=".1"/>
+          <circle cx="55" cy="255" r="75" fill="#fbbf24" opacity=".07"/>
+          <path d="M158 128 L170 84 L192 112 L200 76 L208 112 L230 84 L242 128 Z" fill="url(#meG)"/>
+          <rect x="158" y="132" width="84" height="10" rx="5" fill="url(#meG)"/>
+          <circle cx="178" cy="137" r="3" fill="#1b0f3a"/><circle cx="200" cy="137" r="3" fill="#1b0f3a"/><circle cx="222" cy="137" r="3" fill="#1b0f3a"/>
+          <text x="200" y="200" text-anchor="middle" font-family="Sora,sans-serif" font-weight="800" font-size="26" fill="#ffffff">ELITE DIGITAL</text>
+          <rect x="150" y="216" width="100" height="5" rx="2.5" fill="url(#meG)"/>
+          <text x="200" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" letter-spacing="2" fill="#a78bfa">MENTORIA · 12 SEMANAS</text>
+          <text x="200" y="272" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#ffffff" opacity=".5">grupo seleto · apenas 20 vagas</text>
+        </svg>
+      </div>
       <div class="p-6 flex flex-col flex-1">
         <p class="text-xs text-violet-300 uppercase tracking-widest">Premium · Mentoria</p>
         <h3 class="font-display font-bold text-lg mt-1">Elite Digital</h3>
@@ -269,6 +325,7 @@
     <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(600px 200px at 50% 0%,rgba(52,211,153,.15),transparent)"></div>
     <div class="flex justify-center mb-5 relative">
       <img src="https://image.qwenlm.ai/public_source/fd7bd726-1449-4f74-ab7a-dbbc0e4c8e45/1bf7dfc03-e0aa-4b06-9596-d141f820a9d4.png"
+           onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23052e25%22/><text x=%2250%22 y=%2264%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22%23fbbf24%22 font-family=%22sans-serif%22 font-weight=%22bold%22>BF</text></svg>'"
            alt="Bia Fontes" class="w-16 h-16 rounded-full object-cover object-top border-2 border-amber-400/80">
     </div>
     <h2 class="font-display font-extrabold text-2xl md:text-4xl relative">🎬 Aula gratuita: <span class="grad-text">seu primeiro infoproduto em 7 dias</span></h2>
@@ -282,7 +339,7 @@
   </div>
 </section>
 
-<!-- RODAPÉ ATUALIZADO COM LINKS DE NAVEGAÇÃO -->
+<!-- RODAPÉ -->
 <footer class="relative z-10 border-t border-white/10 py-10 text-center text-xs text-white/40 px-5">
   <div class="max-w-4xl mx-auto">
     <p class="mb-4"><b class="text-white/70 text-sm">Bia Fontes</b> · Especialista em infoprodutos 💚</p>
@@ -313,7 +370,7 @@
     toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
   }
 
-  /* ---------- ticker de seguidores ---------- */
+  /* ---------- ticker ---------- */
   var followerCount = 412318;
   setInterval(function(){
     followerCount += Math.floor(3 + Math.random()*22);
@@ -322,7 +379,7 @@
     el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
   }, 2500);
 
-  /* ---------- contadores animados ---------- */
+  /* ---------- contadores ---------- */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(!en.isIntersecting) return;
@@ -331,8 +388,7 @@
       function step(ts){
         if(!t0) t0 = ts;
         var p = Math.min((ts-t0)/1400, 1);
-        var eased = 1 - Math.pow(1-p, 3);
-        en.target.textContent = fmtBR(target*eased);
+        en.target.textContent = fmtBR(target*(1-Math.pow(1-p,3)));
         if(p<1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -344,11 +400,11 @@
   var launchEnd = Date.now() + ((2*24 + 14)*3600 + 27*60 + 45) * 1000;
   function two(n){ return String(n).padStart(2,"0"); }
   function tick(){
-    var diff = Math.max(0, launchEnd - Date.now());
-    $("cdD").textContent = two(Math.floor(diff/86400000));
-    $("cdH").textContent = two(Math.floor(diff/3600000)%24);
-    $("cdM").textContent = two(Math.floor(diff/60000)%60);
-    $("cdS").textContent = two(Math.floor(diff/1000)%60);
+    var d = Math.max(0, launchEnd - Date.now());
+    $("cdD").textContent = two(Math.floor(d/86400000));
+    $("cdH").textContent = two(Math.floor(d/3600000)%24);
+    $("cdM").textContent = two(Math.floor(d/60000)%60);
+    $("cdS").textContent = two(Math.floor(d/1000)%60);
   }
   tick(); setInterval(tick, 1000);
 
@@ -379,4 +435,37 @@
   var FAQS = [
     {q:"Preciso aparecer para vender infoprodutos?", a:"Não. O método ensina estratégias com e sem exposição: páginas de vendas, tráfego pago e conteúdo escrito funcionam muito bem sem mostrar o rosto."},
     {q:"Serve para quem está começando do zero?", a:"Sim! O Ebook e o curso foram desenhados para quem nunca vendeu nada online. Você começa pela validação da ideia antes de gastar tempo criando."},
-    {q:"Em quanto tempo vejo resultado?", a
+    {q:"Em quanto tempo vejo resultado?", a:"Depende da sua dedicação, mas muitos alunos fazem a primeira venda entre 2 e 6 semanas aplicando o passo a passo completo."},
+    {q:"Existe garantia?", a:"Sim: 7 dias de garantia incondicional em todos os produtos. Se não gostar, devolvemos 100% do valor, sem perguntas."},
+    {q:"Como recebo o acesso após a compra?", a:"Na hora! Você recebe o acesso por e-mail imediatamente após a confirmação do pagamento."}
+  ];
+  var fw = $("faqWrap");
+  FAQS.forEach(function(f){
+    var item = document.createElement("div");
+    item.className = "faq-item glass overflow-hidden";
+    item.innerHTML =
+      '<button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left">'+
+        '<span class="font-semibold text-sm md:text-base">'+f.q+'</span>'+
+        '<span class="faq-chev text-emerald-300 shrink-0">▾</span>'+
+      '</button>'+
+      '<div class="faq-body"><p class="px-5 pb-5 text-sm text-white/60 leading-relaxed">'+f.a+'</p></div>';
+    item.querySelector(".faq-btn").onclick = function(){ item.classList.toggle("open"); };
+    fw.appendChild(item);
+  });
+
+  /* ---------- lead ---------- */
+  $("leadForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var em = $("leadEmail").value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ toast("⚠️ Digite um e-mail válido."); return; }
+    $("leadBtn").textContent = "Acesso enviado ✓";
+    $("leadBtn").disabled = true;
+    $("leadBtn").classList.remove("btn-gold");
+    $("leadBtn").classList.add("btn-em");
+    $("leadEmail").disabled = true;
+    toast("📬 Aula enviada! Verifique sua caixa de entrada.");
+  });
+})();
+</script>
+</body>
+</html>
