@@ -50,6 +50,8 @@
   .nav-link:hover::after{width:100%}
   #toast{transform:translateY(120%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
   #toast.show{transform:translateY(0)}
+  /* Aviso discreto quando o checkout ainda não foi configurado */
+  .checkout-empty{box-shadow:0 0 0 2px rgba(251,191,36,.35) inset}
 </style>
 </head>
 <body class="min-h-screen">
@@ -158,7 +160,7 @@
   </div>
 </section>
 
-<!-- PRODUTOS COM ARTES SVG (NUNCA QUEBRAM) -->
+<!-- PRODUTOS -->
 <section id="produtos" class="relative z-10 max-w-6xl mx-auto px-5 pb-20">
   <div class="text-center mb-10">
     <p class="text-xs uppercase tracking-widest text-emerald-300">🛒 Vitrine digital</p>
@@ -205,7 +207,8 @@
         <div class="mt-auto pt-6">
           <p class="text-white/40 line-through text-sm">R$ 97</p>
           <p class="font-display font-extrabold text-3xl grad-text">R$ 27</p>
-          <a href="ebook/" class="btn-em block text-center w-full rounded-xl py-3 font-bold mt-3">Comprar agora →</a>
+          <!-- BOTÃO DE COMPRA: o destino é definido pelo CONFIG.checkoutEbook lá embaixo -->
+          <a id="buyEbook" href="ebook/" class="btn-em block text-center w-full rounded-xl py-3 font-bold mt-3" data-product="ebook">Comprar agora →</a>
         </div>
       </div>
     </article>
@@ -243,7 +246,8 @@
         <div class="mt-auto pt-6">
           <p class="text-white/40 line-through text-sm">R$ 997</p>
           <p class="font-display font-extrabold text-3xl grad-text">R$ 497</p>
-          <a href="curso/" class="btn-gold block text-center w-full rounded-xl py-3 font-bold mt-3">Garantir minha vaga →</a>
+          <!-- BOTÃO DE COMPRA: destino definido pelo CONFIG.checkoutCurso -->
+          <a id="buyCurso" href="curso/" class="btn-gold block text-center w-full rounded-xl py-3 font-bold mt-3" data-product="curso">Garantir minha vaga →</a>
         </div>
       </div>
     </article>
@@ -280,7 +284,8 @@
         <div class="mt-auto pt-6">
           <p class="text-white/40 line-through text-sm">R$ 3.500</p>
           <p class="font-display font-extrabold text-3xl grad-text">R$ 1.997</p>
-          <a href="mentoria/" class="btn-ghost block text-center w-full rounded-xl py-3 font-bold mt-3 text-amber-300">Aplicar para a mentoria →</a>
+          <!-- BOTÃO DE COMPRA: destino definido pelo CONFIG.checkoutMentoria -->
+          <a id="buyMentoria" href="mentoria/" class="btn-ghost block text-center w-full rounded-xl py-3 font-bold mt-3 text-amber-300" data-product="mentoria">Aplicar para a mentoria →</a>
         </div>
       </div>
     </article>
@@ -319,7 +324,7 @@
   <div class="space-y-3" id="faqWrap"></div>
 </section>
 
-<!-- CAPTURA -->
+<!-- CAPTURA DE E-MAIL (FORMSUBMIT) -->
 <section id="aula" class="relative z-10 max-w-6xl mx-auto px-5 pb-24">
   <div class="glass p-8 md:p-12 text-center overflow-hidden relative">
     <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(600px 200px at 50% 0%,rgba(52,211,153,.15),transparent)"></div>
@@ -330,8 +335,23 @@
     </div>
     <h2 class="font-display font-extrabold text-2xl md:text-4xl relative">🎬 Aula gratuita: <span class="grad-text">seu primeiro infoproduto em 7 dias</span></h2>
     <p class="text-white/55 mt-3 text-sm relative">Deixe seu melhor e-mail e receba o acesso + o plano de ação em PDF.</p>
-    <form id="leadForm" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mt-7 relative">
-      <input id="leadEmail" type="email" required placeholder="seu@email.com"
+
+    <!--
+      ═══════════════════════════════════════════════════════════════
+      FORMULÁRIO DE CAPTURA — ENVIA E-MAIL DE VERDADE VIA FORMSUBMIT
+      ═══════════════════════════════════════════════════════════════
+      1) Troque CONFIG.emailAula (lá embaixo no script) pelo SEU e-mail.
+      2) Na PRIMEIRA vez que alguém enviar, você recebe um e-mail do
+         FormSubmit pedindo para CONFIRMAR. Confirme uma única vez.
+      3) Pronto: todo lead cai direto na sua caixa de entrada.
+    -->
+    <form id="leadForm" action="https://formsubmit.co/SEU_EMAIL_AQUI@gmail.com" method="POST"
+          class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mt-7 relative">
+      <input type="hidden" name="_subject" value="🎬 Novo lead — Aula gratuita Bia Fontes">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_honey" value="">
+      <input id="leadEmail" type="email" name="email" required placeholder="seu@email.com"
         class="flex-1 bg-white/5 border border-white/15 rounded-xl px-5 py-3.5 text-sm focus:outline-none focus:border-emerald-400 transition">
       <button id="leadBtn" type="submit" class="btn-gold rounded-xl px-7 py-3.5 font-bold whitespace-nowrap">Quero assistir 🚀</button>
     </form>
@@ -357,6 +377,34 @@
 <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass px-5 py-3 text-sm font-medium text-emerald-200"></div>
 
 <script>
+/* ═══════════════════════════════════════════════════════════════════
+   ⚙️  CONFIG — É AQUI QUE VOCÊ PERSONALIZA O SITE
+   ═══════════════════════════════════════════════════════════════════
+   👉 LINKS DE CHECKOUT (venda real):
+      Cadastre cada produto na Kiwify (kiwify.com.br), Hotmart ou Eduzz.
+      A plataforma gera um link de checkout. Cole ele abaixo.
+
+      • Se você colar um link, o botão "Comprar" leva direto pro checkout.
+      • Se deixar VAZIO (""), o botão leva para a página do produto
+        (ebook/, curso/ ou mentoria/) — como está agora.
+   ═══════════════════════════════════════════════════════════════════ */
+var CONFIG = {
+
+  // 💰 Cole aqui o link de checkout do EBOOK (Kiwify/Hotmart/Eduzz)
+  checkoutEbook: "",      // ex: "https://pay.kiwify.com.br/abc123"
+
+  // 💰 Cole aqui o link de checkout do CURSO
+  checkoutCurso: "",      // ex: "https://pay.kiwify.com.br/def456"
+
+  // 💰 Cole aqui o link de checkout da MENTORIA
+  checkoutMentoria: "",   // ex: "https://pay.kiwify.com.br/ghi789"
+
+  // 📧 SEU E-MAIL para receber os leads da aula gratuita (FormSubmit)
+  emailAula: "SEU_EMAIL_AQUI@gmail.com"
+};
+/* ═══════════════════════════════════════════════════════════════════ */
+
+
 (function(){
   "use strict";
   function $(id){ return document.getElementById(id); }
@@ -368,6 +416,30 @@
     t.textContent = msg; t.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
+  }
+
+  /* ---------- aplica os links de checkout do CONFIG ---------- */
+  function setupCheckout(btnId, checkoutUrl, fallbackUrl){
+    var btn = $(btnId);
+    if(checkoutUrl && checkoutUrl.trim() !== ""){
+      // Checkout configurado: vai direto para a venda
+      btn.href = checkoutUrl;
+      btn.target = "_blank";
+      btn.rel = "noopener";
+    } else {
+      // Sem checkout ainda: vai para a página do produto
+      btn.href = fallbackUrl;
+      btn.classList.add("checkout-empty"); // contorno discreto de lembrete
+    }
+  }
+  setupCheckout("buyEbook",    CONFIG.checkoutEbook,    "ebook/");
+  setupCheckout("buyCurso",    CONFIG.checkoutCurso,    "curso/");
+  setupCheckout("buyMentoria", CONFIG.checkoutMentoria, "mentoria/");
+
+  /* ---------- aplica o e-mail do CONFIG no FormSubmit ---------- */
+  var leadForm = $("leadForm");
+  if(CONFIG.emailAula && CONFIG.emailAula.indexOf("SEU_EMAIL_AQUI") === -1){
+    leadForm.action = "https://formsubmit.co/" + CONFIG.emailAula;
   }
 
   /* ---------- ticker ---------- */
@@ -453,17 +525,14 @@
     fw.appendChild(item);
   });
 
-  /* ---------- lead ---------- */
-  $("leadForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    var em = $("leadEmail").value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ toast("⚠️ Digite um e-mail válido."); return; }
-    $("leadBtn").textContent = "Acesso enviado ✓";
-    $("leadBtn").disabled = true;
-    $("leadBtn").classList.remove("btn-gold");
-    $("leadBtn").classList.add("btn-em");
-    $("leadEmail").disabled = true;
-    toast("📬 Aula enviada! Verifique sua caixa de entrada.");
+  /* ---------- feedback visual ao enviar o formulário ----------
+     O FormSubmit redireciona o usuário; este aviso só aparece
+     brevemente antes do redirecionamento. */
+  leadForm.addEventListener("submit", function(){
+    var btn = $("leadBtn");
+    btn.textContent = "Enviando...";
+    btn.disabled = true;
+    toast("📬 Enviando seu acesso...");
   });
 })();
 </script>
