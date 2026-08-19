@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infoprodutor Pro · O curso completo — Bia Fontes 🎓</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/sora@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/index.css">
+<style>
+  :root{ --bg:#060a13; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+         --em:#34d399; --gold:#fbbf24; --vio:#a78bfa; --cy:#22d3ee; }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:#eef2ff;overflow-x:hidden}
+  h1,h2,h3,.font-display{font-family:'Sora',sans-serif}
+  ::selection{background:var(--em);color:#06281c}
+  .blob{position:fixed;border-radius:9999px;filter:blur(100px);pointer-events:none;z-index:0;animation:drift 16s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(70px,-50px) scale(1.18)}}
+  .glass{background:var(--card);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:1.5rem}
+  .grad-text{background:linear-gradient(90deg,var(--em),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn-gold{background:linear-gradient(90deg,#fbbf24,#f59e0b);color:#221503;transition:transform .2s,box-shadow .2s}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(251,191,36,.4)}
+  .btn-em{background:linear-gradient(90deg,#34d399,#10b981);color:#04241a;transition:transform .2s,box-shadow .2s}
+  .btn-em:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(52,211,153,.4)}
+  .btn-ghost{border:1px solid var(--line);transition:all .2s}
+  .btn-ghost:hover{background:rgba(255,255,255,.07)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp .7s ease both}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+  .pop{animation:pop .35s ease}
+  .mod-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+  .mod.open .mod-body{grid-template-rows:1fr}
+  .mod.open .mod-chev{transform:rotate(180deg)}
+  .mod-chev{transition:transform .3s}
+  .faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+  .faq-item.open .faq-body{grid-template-rows:1fr}
+  .faq-item.open .faq-chev{transform:rotate(180deg)}
+  .faq-chev{transition:transform .3s}
+  .modal-overlay{opacity:0;pointer-events:none;transition:opacity .25s}
+  .modal-overlay.show{opacity:1;pointer-events:auto}
+  .modal-box{transform:translateY(24px) scale(.97);transition:transform .3s}
+  .modal-overlay.show .modal-box{transform:translateY(0) scale(1)}
+  #toast{transform:translateY(120%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  #toast.show{transform:translateY(0)}
+  .tick-box{min-width:64px}
+</style>
+</head>
+<body class="min-h-screen">
+
+<div class="blob w-[26rem] h-[26rem] bg-emerald-600" style="top:-100px;left:-120px;opacity:.22"></div>
+<div class="blob w-[30rem] h-[30rem] bg-amber-500" style="bottom:-160px;right:-140px;opacity:.14;animation-delay:-6s"></div>
+<div class="blob w-80 h-80 bg-violet-600" style="top:45%;left:48%;opacity:.12;animation-delay:-11s"></div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#060a13]/75 border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3 min-w-0">
+      <span class="w-10 h-10 rounded-xl btn-em grid place-items-center text-xl shrink-0">🎓</span>
+      <div class="min-w-0">
+        <p class="font-display font-bold leading-tight truncate">Infoprodutor Pro</p>
+        <p class="text-[11px] text-emerald-300/80 truncate">o curso completo da Máquina de Infoprodutos</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="../" class="btn-ghost rounded-full px-4 py-2 text-xs text-white/70">← Voltar ao site</a>
+      <button class="btn-gold rounded-full px-5 py-2 text-sm font-bold" data-buy>Garantir vaga</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 pt-14 pb-16 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
+  <div class="fade-up">
+    <span class="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-amber-300">
+      🏆 Carro-chefe · Turma 07 · <span class="text-white/50">50% OFF por tempo limitado</span>
+    </span>
+    <h1 class="mt-5 text-4xl md:text-5xl font-extrabold leading-[1.12]">
+      Do zero ao <span class="grad-text">lançamento lucrativo</span> em 8 módulos.
+    </h1>
+    <p class="mt-5 text-white/60 max-w-xl leading-relaxed">
+      O <b class="text-white">Infoprodutor Pro</b> é a formação completa da Bia Fontes: criação, oferta, funil, tráfego e lançamento — com comunidade, templates e certificado.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-8">
+      <button class="btn-gold rounded-full px-8 py-3.5 font-bold" data-buy>Quero minha vaga →</button>
+      <a href="#modulos" class="btn-ghost rounded-full px-7 py-3.5 text-sm text-white/85">Ver os módulos</a>
+    </div>
+    <div class="flex flex-wrap gap-5 mt-8 text-sm text-white/55">
+      <span>📼 60+ aulas</span><span>👥 Comunidade</span><span>🎁 4 bônus</span><span>📜 Certificado</span><span>♾️ Acesso vitalício</span>
+    </div>
+  </div>
+  <div class="fade-up" style="animation-delay:.15s">
+    <div class="glass p-3">
+      <img src="https://image.qwenlm.ai/public_source/663f602e-79cd-401f-9708-153b858c6cd8/1a4936f6c-8315-45c2-8a42-6756d332736c.png"
+           alt="Plataforma do curso Infoprodutor Pro" class="w-full rounded-2xl object-cover aspect-[4/3]">
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 pb-16">
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass p-7">
+      <h2 class="font-display font-bold text-lg mb-4 text-emerald-300">✅ É para você que…</h2>
+      <ul class="space-y-3 text-sm text-white/70">
+        <li>Quer viver do próprio conhecimento, mesmo começando do zero</li>
+        <li>Já vende algo, mas não tem um método repetível de lançamento</li>
+        <li>Prefere constância e estratégia a “hacks” milagrosos</li>
+        <li>Quer aparecer — ou construir sem mostrar o rosto</li>
+      </ul>
+    </div>
+    <div class="glass p-7">
+      <h2 class="font-display font-bold text-lg mb-4 text-red-300">❌ Não é para você que…</h2>
+      <ul class="space-y-3 text-sm text-white/70">
+        <li>Busca dinheiro fácil sem aplicar nenhum passo</li>
+        <li>Quer apenas “colecionar cursos” sem executar</li>
+        <li>Espera resultado sem publicar conteúdo</li>
+        <li>Não tem 3 horas por semana para dedicar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section id="modulos" class="relative z-10 max-w-4xl mx-auto px-5 pb-16">
+  <div class="text-center mb-8">
+    <p class="text-xs uppercase tracking-widest text-emerald-300">📚 Conteúdo programático</p>
+    <h2 class="font-display font-extrabold text-3xl md:text-4xl mt-2">Os 8 módulos do método</h2>
+    <p class="text-white/50 mt-3 text-sm">Clique em cada módulo para ver as aulas.</p>
+  </div>
+  <div class="space-y-3" id="modWrap"></div>
+</section>
+
+<!-- BÔNUS -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 pb-16">
+  <div class="text-center mb-8">
+    <p class="text-xs uppercase tracking-widest text-emerald-300">🎁 Bônus inclusos</p>
+    <h2 class="font-display font-extrabold text-3xl mt-2">R$ 1.400 em bônus, de graça</h2>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="glass p-6"><p class="text-3xl">👥</p><h3 class="font-bold mt-3">Comunidade de alunos</h3><p class="text-xs text-white/55 mt-2">Networking, dúvidas respondidas e parcerias entre alunos.</p><p class="text-xs text-amber-300 mt-3">Valor: R$ 480/ano</p></div>
+    <div class="glass p-6"><p class="text-3xl">📋</p><h3 class="font-bold mt-3">Pack de templates</h3><p class="text-xs text-white/55 mt-2">10 ofertas prontas, página de vendas e sequência de mensagens.</p><p class="text-xs text-amber-300 mt-3">Valor: R$ 397</p></div>
+    <div class="glass p-6"><p class="text-3xl">🗓️</p><h3 class="font-bold mt-3">Calendário de lançamento</h3><p class="text-xs text-white/55 mt-2">O cronograma dia a dia, do aquecimento ao fechamento do carrinho.</p><p class="text-xs text-amber-300 mt-3">Valor: R$ 297</p></div>
+    <div class="glass p-6"><p class="text-3xl">📜</p><h3 class="font-bold mt-3">Certificado oficial</h3><p class="text-xs text-white/55 mt-2">Concluiu o método? Certificado para usar no perfil e na bio.</p><p class="text-xs text-amber-300 mt-3">Valor: R$ 226</p></div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="relative z-10 max-w-3xl mx-auto px-5 pb-16">
+  <div class="glass p-8 md:p-10 text-center" style="border-color:rgba(251,191,36,.4);box-shadow:0 0 50px rgba(251,191,36,.12)">
+    <p class="text-xs uppercase tracking-widest text-amber-300">💳 Oferta da Turma 07</p>
+    <p class="text-white/40 line-through mt-5">De R$ 997</p>
+    <p class="font-display font-extrabold text-5xl grad-text mt-1">R$ 497</p>
+    <p class="text-sm text-white/55 mt-2">ou 12x de R$ 49 no cartão</p>
+    <button class="btn-gold rounded-full px-10 py-4 font-display font-extrabold text-lg mt-7" data-buy>Garantir minha vaga agora →</button>
+    <div class="flex flex-wrap justify-center gap-4 mt-7 text-xs text-white/50">
+      <span>🔒 Garantia incondicional de 7 dias</span><span>♾️ Acesso vitalício + atualizações</span><span>⚡ Acesso imediato</span>
+    </div>
+    <div class="flex justify-center gap-2 mt-7" id="cdRow">
+      <div class="tick-box glass text-center py-2.5 px-3"><p id="cdH" class="font-display font-extrabold text-lg grad-text">--</p><p class="text-[9px] uppercase tracking-widest text-white/50 mt-0.5">horas</p></div>
+      <div class="tick-box glass text-center py-2.5 px-3"><p id="cdM" class="font-display font-extrabold text-lg grad-text">--</p><p class="text-[9px] uppercase tracking-widest text-white/50 mt-0.5">min</p></div>
+      <div class="tick-box glass text-center py-2.5 px-3"><p id="cdS" class="font-display font-extrabold text-lg grad-text">--</p><p class="text-[9px] uppercase tracking-widest text-white/50 mt-0.5">seg</p></div>
+    </div>
+    <p class="text-[11px] text-white/35 mt-3">⏳ O desconto de 50% termina quando o cronômetro zerar.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="relative z-10 max-w-3xl mx-auto px-5 pb-24">
+  <div class="text-center mb-8">
+    <p class="text-xs uppercase tracking-widest text-emerald-300">❓ Perguntas frequentes</p>
+    <h2 class="font-display font-extrabold text-3xl mt-2">Antes de decidir, leia isso</h2>
+  </div>
+  <div class="space-y-3" id="faqWrap"></div>
+</section>
+
+<footer class="relative z-10 border-t border-white/10 py-8 text-center text-xs text-white/40 px-5">
+  <p><b class="text-white/70">Infoprodutor Pro</b> · um produto da Bia Fontes 💚</p>
+  <p class="mt-1"><a href="../" class="text-emerald-300/70 hover:text-emerald-300 transition">← voltar para a página inicial</a></p>
+</footer>
+
+<!-- MODAL -->
+<div id="modal" class="modal-overlay fixed inset-0 z-50 grid place-items-center p-4 bg-black/70 backdrop-blur-sm">
+  <div class="modal-box glass w-full max-w-md p-7 relative">
+    <button id="modalClose" class="absolute top-4 right-4 w-9 h-9 rounded-full btn-ghost grid place-items-center text-white/70">✕</button>
+    <div id="modalForm">
+      <p class="text-xs uppercase tracking-widest text-emerald-300">Matrícula · Turma 07</p>
+      <h3 class="font-display font-bold text-xl mt-1">Infoprodutor Pro</h3>
+      <p class="text-sm text-white/50 mt-1">Investimento: <b class="grad-text text-lg">R$ 497 (ou 12x R$ 49)</b></p>
+      <div class="space-y-3 mt-6">
+        <input id="mName" type="text" placeholder="Seu nome" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 transition">
+        <input id="mEmail" type="email" placeholder="Seu melhor e-mail" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 transition">
+      </div>
+      <button id="mConfirm" class="btn-em w-full rounded-xl py-3.5 font-bold mt-5">Confirmar matrícula ✓</button>
+      <p class="text-[11px] text-white/35 mt-3 text-center">🔐 Compra simulada — nenhum dado real é processado.</p>
+    </div>
+    <div id="modalOk" class="hidden text-center py-6">
+      <div class="text-5xl mb-4">🎓</div>
+      <h3 class="font-display font-bold text-xl">Matrícula confirmada!</h3>
+      <p class="text-sm text-white/55 mt-2">Bem-vindo(a) à Turma 07! Confira seu e-mail para acessar a plataforma.</p>
+      <button id="mOkBtn" class="btn-gold rounded-full px-8 py-3 font-bold mt-6">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass px-5 py-3 text-sm font-medium text-emerald-200"></div>
+
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+
+  var toastTimer;
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
+  }
+
+  /* ---------- módulos ---------- */
+  var MODS = [
+    {n:"01", t:"Mentalidade e nicho", d:"A base que sustenta tudo: posicionamento, escolha de nicho e a persona da sua marca.",
+     a:["Boas-vindas e como usar o curso","Escolhendo um nicho que compra","Posicionamento: especialista vende, generalista explica","Definindo nome, rosto e tom de voz"]},
+    {n:"02", t:"Ideia validada", d:"Descubra o que o mercado quer comprar antes de gastar tempo criando.",
+     a:["O teste dos 3 sinais de demanda","A Técnica das 10 Conversas, passo a passo","Analisando concorrentes sem copiar","Luz verde ou luz vermelha: decidindo a ideia"]},
+    {n:"03", t:"Criação do produto", d:"Empacote seu conhecimento no formato certo, sem perfeccionismo.",
+     a:["Os 4 formatos de entrada e quando usar cada um","Estrutura de conteúdo 80/20","Gravação e diagramação simples","Entrega e organização dos materiais"]},
+    {n:"04", t:"Oferta irresistível", d:"As 7 camadas que transformam “vou pensar” em “comprei”.",
+     a:["Promessa, dor e método com nome próprio","Bônus que matam objeções","Ancoragem de preço e garantia","Montando a oferta completa na prática"]},
+    {n:"05", t:"Página de vendas", d:"A vitrine que converte: estrutura, copy e checkout.",
+     a:["A estrutura de página que mais vende","Copy com as palavras do cliente","Checkout mobile-first","Publicando a página (sem precisar programar)"]},
+    {n:"06", t:"Funil de atração", d:"Isca digital, captura e nutrição para vender todos os dias.",
+     a:["Criando a isca digital perfeita","Página de captura em 30 minutos","Sequência de 4 mensagens que converte","Organizando leads por temperatura"]},
+    {n:"07", t:"Tráfego e audiência", d:"Conteúdo orgânico + primeiros passos no pago.",
+     a:["Pilares de conteúdo para infoprodutos","Reels e carrosséis que trazem seguidores","Anúncios do zero com R$ 10/dia","Métricas que importam (e as que não importam)"]},
+    {n:"08", t:"O lançamento", d:"O evento que gera pico de vendas: aquecimento, carrinho e pós.",
+     a:["Cronograma de 14 dias de aquecimento","A live/aula de abertura","Carrinho aberto: mensagens diárias","Escassez real, pós-venda e próxima turma"]}
+  ];
+  var mw = $("modWrap");
+  MODS.forEach(function(m, i){
+    var card = document.createElement("div");
+    card.className = "mod glass overflow-hidden";
+    card.innerHTML =
+      '<button class="mod-btn w-full flex items-center gap-4 p-5 text-left">'+
+        '<span class="font-display font-extrabold text-xl grad-text shrink-0">'+m.n+'</span>'+
+        '<span class="flex-1 min-w-0"><b class="block font-semibold">'+m.t+'</b>'+
+        '<span class="block text-xs text-white/50 mt-1">'+m.d+'</span></span>'+
+        '<span class="text-[11px] text-white/35 shrink-0 hidden sm:block">'+m.a.length+' aulas</span>'+
+        '<span class="mod-chev text-emerald-300 shrink-0">▾</span>'+
+      '</button>'+
+      '<div class="mod-body"><div class="px-5 pb-5 pt-1">'+
+        '<ul class="space-y-2">'+
+          m.a.map(function(l){ return '<li class="flex items-center gap-3 text-sm text-white/70"><span class="w-6 h-6 shrink-0 rounded-lg grid place-items-center text-[10px]" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3)">▶</span>'+l+'</li>'; }).join("")+
+        '</ul>'+
+      '</div></div>';
+    card.querySelector(".mod-btn").onclick = function(){
+      var wasOpen = card.classList.contains("open");
+      document.querySelectorAll(".mod").forEach(function(x){ x.classList.remove("open"); });
+      if(!wasOpen) card.classList.add("open");
+    };
+    mw.appendChild(card);
+  });
+
+  /* ---------- countdown ---------- */
+  var end = Date.now() + ((1*24 + 9)*3600 + 41*60 + 20) * 1000;
+  function two(n){ return String(n).padStart(2,"0"); }
+  function tick(){
+    var d = Math.max(0, end - Date.now());
+    $("cdH").textContent = two(Math.floor(d/3600000));
+    $("cdM").textContent = two(Math.floor(d/60000)%60);
+    $("cdS").textContent = two(Math.floor(d/1000)%60);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- FAQ ---------- */
+  var FAQS = [
+    {q:"Por quanto tempo tenho acesso?", a:"Acesso vitalício: pagou uma vez, é seu para sempre — incluindo todas as atualizações futuras do método."},
+    {q:"Preciso aparecer em vídeo?", a:"Não. O módulo 1 mostra como construir a marca com ou sem exposição, e o módulo 3 ensina gravação simples para quem quiser aparecer."},
+    {q:"Em quanto tempo vejo resultado?", a:"Alunos dedicados costumam fazer o primeiro lançamento entre 4 e 8 semanas. Depende da sua execução — o método é direto ao ponto."},
+    {q:"E se eu não gostar?", a:"Garantia incondicional de 7 dias: devolvemos 100% do valor, sem perguntas e sem burocracia."},
+    {q:"As aulas são ao vivo ou gravadas?", a:"Gravadas, para você assistir no seu ritmo. Os encontros ao vivo fazem parte da Mentoria Elite Digital (produto separado)."}
+  ];
+  var fw = $("faqWrap");
+  FAQS.forEach(function(f){
+    var item = document.createElement("div");
+    item.className = "faq-item glass overflow-hidden";
+    item.innerHTML =
+      '<button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left">'+
+        '<span class="font-semibold text-sm md:text-base">'+f.q+'</span>'+
+        '<span class="faq-chev text-emerald-300 shrink-0">▾</span>'+
+      '</button>'+
+      '<div class="faq-body"><p class="px-5 pb-5 text-sm text-white/60 leading-relaxed">'+f.a+'</p></div>';
+    item.querySelector(".faq-btn").onclick = function(){ item.classList.toggle("open"); };
+    fw.appendChild(item);
+  });
+
+  /* ---------- modal ---------- */
+  function openModal(){
+    $("modalForm").classList.remove("hidden");
+    $("modalOk").classList.add("hidden");
+    $("mName").value = ""; $("mEmail").value = "";
+    $("modal").classList.add("show");
+  }
+  function closeModal(){ $("modal").classList.remove("show"); }
+  document.querySelectorAll("[data-buy]").forEach(function(b){ b.onclick = openModal; });
+  $("modalClose").onclick = closeModal;
+  $("mOkBtn").onclick = closeModal;
+  $("modal").addEventListener("click", function(e){ if(e.target === $("modal")) closeModal(); });
+  $("mConfirm").onclick = function(){
+    var nm = $("mName").value.trim(), em = $("mEmail").value.trim();
+    if(nm.length < 3){ toast("⚠️ Digite seu nome completo."); $("mName").focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ toast("⚠️ Digite um e-mail válido."); $("mEmail").focus(); return; }
+    $("modalForm").classList.add("hidden");
+    $("modalOk").classList.remove("hidden");
+    toast("🎓 Matrícula realizada com sucesso!");
+  };
+})();
+</script>
+</body>
+</html>

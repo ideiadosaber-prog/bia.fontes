@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ebook · Máquina de Infoprodutos — Bia Fontes 📗</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/sora@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5/index.css">
+<style>
+  :root{ --bg:#060a13; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+         --em:#34d399; --gold:#fbbf24; --vio:#a78bfa; }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:#eef2ff;overflow-x:hidden}
+  h1,h2,h3,.font-display{font-family:'Sora',sans-serif}
+  .book-body{font-family:'Lora',serif;font-size:16.5px;line-height:1.85;color:#d7deeb}
+  ::selection{background:var(--em);color:#06281c}
+  .glass{background:var(--card);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:1.25rem}
+  .grad-text{background:linear-gradient(90deg,var(--em),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn-gold{background:linear-gradient(90deg,#fbbf24,#f59e0b);color:#221503;transition:transform .2s,box-shadow .2s}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(251,191,36,.4)}
+  .btn-ghost{border:1px solid var(--line);transition:all .2s}
+  .btn-ghost:hover{background:rgba(255,255,255,.07)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .chapter{display:none;animation:fadeUp .5s ease both}
+  .chapter.active{display:block}
+  .chapter p{margin-bottom:1.1rem}
+  .chapter ul{list-style:none;margin:0 0 1.2rem}
+  .chapter ul li{padding-left:1.6rem;position:relative;margin-bottom:.6rem}
+  .chapter ul li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .chapter h3{color:#fff;font-weight:700;font-size:1.1rem;margin:1.6rem 0 .8rem}
+  .box{border-radius:1rem;padding:1rem 1.25rem;margin:1.4rem 0;font-family:'Inter',sans-serif;font-size:14px;line-height:1.7}
+  .box b{display:block;margin-bottom:.3rem}
+  .box-insight{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.35)}
+  .box-warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.35)}
+  .box-action{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.4)}
+  .nav-item{transition:all .2s}
+  .nav-item.active{background:linear-gradient(90deg,rgba(52,211,153,.16),rgba(251,191,36,.1));border-color:rgba(52,211,153,.5)}
+  .nav-item.visited .nv-dot{background:var(--em)}
+  .cover{background:radial-gradient(1200px 600px at 70% -10%,rgba(52,211,153,.22),transparent),
+                    radial-gradient(900px 500px at 10% 110%,rgba(251,191,36,.16),transparent),#07120e}
+  #toast{transform:translateY(120%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  #toast.show{transform:translateY(0)}
+  @media print{
+    body{background:#fff;color:#111}
+    header,#sideNav,.no-print,#toast{display:none!important}
+    .chapter{display:block!important;page-break-after:always;color:#111}
+    .chapter h2,.chapter h3{color:#111}
+    .book-body,.chapter p,.chapter ul li{color:#222}
+    .glass{background:#f7f7f7;border-color:#ddd}
+    .box{background:#f4f4f4;border-color:#ccc;color:#111}
+    .grad-text{color:#047857;-webkit-text-fill-color:#047857}
+    main{margin:0!important;max-width:100%!important}
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#060a13]/80 border-b border-white/10 no-print">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+    <span class="text-xl">📗</span>
+    <div class="min-w-0 flex-1">
+      <p class="font-display font-bold text-sm truncate">Máquina de Infoprodutos</p>
+      <p class="text-[11px] text-white/40 truncate">por Bia Fontes · edição Turma 07</p>
+    </div>
+    <div class="hidden sm:block w-40">
+      <div style="height:6px;background:rgba(255,255,255,.1);border-radius:9999px;overflow:hidden">
+        <div id="progBar" style="height:100%;width:0%;background:linear-gradient(90deg,#34d399,#fbbf24);transition:width .4s"></div>
+      </div>
+      <p class="text-[10px] text-white/40 mt-1 text-center" id="progTxt">0% lido</p>
+    </div>
+    <button id="btnPrint" class="btn-gold rounded-full px-4 py-2 text-xs font-bold whitespace-nowrap">🖨️ Salvar PDF</button>
+  </div>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 py-8 grid lg:grid-cols-[280px_1fr] gap-8">
+
+  <!-- SIDEBAR -->
+  <aside id="sideNav" class="lg:sticky lg:top-24 self-start">
+    <p class="text-xs uppercase tracking-widest text-white/40 mb-3 px-1">Sumário</p>
+    <nav id="tocNav" class="space-y-1.5 max-h-[70vh] overflow-y-auto pr-1"></nav>
+  </aside>
+
+  <!-- LEITURA -->
+  <main id="bookMain" class="min-w-0">
+    <div id="chapters"></div>
+
+    <div class="flex items-center justify-between mt-10 no-print">
+      <button id="btnPrev" class="btn-ghost rounded-full px-6 py-2.5 text-sm text-white/80">← Anterior</button>
+      <span id="pageInfo" class="text-xs text-white/40">1 / 1</span>
+      <button id="btnNext" class="btn-gold rounded-full px-6 py-2.5 text-sm font-bold">Próximo →</button>
+    </div>
+  </main>
+</div>
+
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass px-5 py-3 text-sm font-medium text-emerald-200 no-print"></div>
+
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+
+  var toastTimer;
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
+  function lsGet(k,d){ try{ var v = JSON.parse(localStorage.getItem(k)); return v===null?d:v; }catch(e){ return d; } }
+  function lsSet(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+
+  /* ================= CONTEÚDO DO EBOOK ================= */
+  var BOOK = [
+  {
+    label:"Capa", short:"Capa", time:"", cover:true,
+    html:'<div class="cover rounded-3xl border border-white/10 p-10 md:p-16 text-center">'+
+      '<p class="text-xs uppercase tracking-[0.3em] text-emerald-300">Ebook de entrada · Edição Turma 07</p>'+
+      '<h1 class="font-display font-extrabold text-4xl md:text-6xl mt-6 leading-tight">Máquina de<br><span class="grad-text">Infoprodutos</span></h1>'+
+      '<p class="text-white/60 mt-6 max-w-md mx-auto">O método completo para criar, validar e vender seu primeiro produto digital em 30 dias — mesmo começando do zero.</p>'+
+      '<div class="mt-10 inline-flex items-center gap-3 glass px-5 py-3">'+
+        '<span class="w-10 h-10 rounded-full grid place-items-center font-display font-bold" style="background:linear-gradient(135deg,#34d399,#fbbf24);color:#0a1f16">B</span>'+
+        '<span class="text-left"><b class="block text-sm">Bia Fontes</b><span class="text-[11px] text-emerald-300">@biafontes.digital</span></span>'+
+      '</div>'+
+      '<p class="text-[11px] text-white/35 mt-10">📖 8 capítulos + bônus · ⏱️ ~40 min de leitura</p>'+
+    '</div>'
+  },
+  {
+    label:"Introdução", short:"Por que agora", time:"4 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Por que seu conhecimento virou um ativo 💡</h2>'+
+      '<p>Você passa horas respondendo as mesmas perguntas, resolvendo os mesmos problemas, ensinando de graça aquilo que domina. Cada uma dessas respostas é um pedaço de produto esperando para ser empacotado.</p>'+
+      '<p>Infoproduto é isso: <b class="text-white">conhecimento transformado em um pacote que alguém compra para resolver uma dor específica</b>. Um ebook, um curso, uma mentoria, um pack de templates. O custo de produção é quase zero; a margem, quase total.</p>'+
+      '<p>Neste ebook você vai percorrer o caminho completo: da ideia validada até a primeira venda, em 30 dias. Sem promessa mágica — com método.</p>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>As pessoas não compram conteúdo. Compram a distância entre onde estão e onde querem chegar. Seu trabalho é medir essa distância e vender a ponte.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Escreva em uma frase: “Eu ajudo _____ a conseguir _____”. Se não conseguir preencher, você ainda não tem um produto — tem um tema. Voltaremos nisso no Capítulo 2.</div>'
+  },
+  {
+    label:"Capítulo 1", short:"Mentalidade e nicho", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Mentalidade de produtora digital 🧠</h2>'+
+      '<p>Antes da ferramenta, o posicionamento. Três decisões definem tudo que vem depois:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Escolher um nicho, não um assunto.</b> “Finanças” é assunto. “Finanças para mães solo que querem sair das dívidas” é nicho. Nicho compra; assunto apenas assiste.</li>'+
+        '<li><b class="text-white">Assumir a vitrine.</b> Você não precisa aparecer em vídeo, mas precisa de uma persona consistente: nome, rosto, tom de voz e frequência.</li>'+
+        '<li><b class="text-white">Pensar em escada, não em produto.</b> O ebook de R$ 27 não é o negócio: é a porta de entrada para o curso, a mentoria e a comunidade.</li>'+
+      '</ul>'+
+      '<div class="box box-warn"><b>⚠️ Erro comum</b>Esperar “estar pronto” para lançar. Perfeccionismo é procrastinação de terno. Você estará pronto DEPOIS do primeiro lançamento, não antes.</div>'+
+      '<p>Quem domina um nicho pequeno e faminto vence quem compete num oceano genérico. Especialista vende; generalista explica.</p>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Liste 3 nichos possíveis para você e escolha o menor deles — aquele em que você consegue falar com uma pessoa específica, não com uma multidão.</div>'
+  },
+  {
+    label:"Capítulo 2", short:"A ideia validada", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Encontrando uma ideia que já nasceu vendendo 🔍</h2>'+
+      '<p>Ideia boa não é a que você acha bonita — é a que o mercado já pediu. Use o teste dos 3 sinais:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">1️⃣ Pergunta repetida:</b> as pessoas já te procuram para perguntar sobre isso?</li>'+
+        '<li><b class="text-white">2️⃣ Dor urgente:</b> o problema custa tempo, dinheiro ou status AGORA?</li>'+
+        '<li><b class="text-white">3️⃣ Concorrência pagante:</b> alguém já vende algo parecido? Ótimo — significa que existe dinheiro na mesa.</li>'+
+      '</ul>'+
+      '<p>Com 2 ou 3 sinais, aplique a <b class="text-white">Técnica das 10 Conversas</b>: chame 10 pessoas do seu público e pergunte sobre a dor — nunca sobre o produto. Se 6 delas disserem “eu pagaria por uma solução”, você tem luz verde.</p>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>Nas 10 conversas, anote as PALAVRAS que as pessoas usam. Elas viram sua headline, sua página de vendas e seus anúncios. O cliente escreve o copy — você só transcreve.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Realize as 10 conversas esta semana. Registre as 3 frases mais repetidas — elas são o coração do seu produto.</div>'
+  },
+  {
+    label:"Capítulo 3", short:"Empacotando conhecimento", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Do saber ao produto: o empacotamento 📦</h2>'+
+      '<p>Conhecimento solto não se vende. Ele precisa de formato, promessa e nome. Os 4 formatos de entrada:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Ebook / guia:</b> criação rápida, preço baixo, ótimo para validar. É este que você está lendo.</li>'+
+        '<li><b class="text-white">Mini-curso:</b> mais percepção de valor; exige gravação simples de aulas curtas.</li>'+
+        '<li><b class="text-white">Templates / ferramentas:</b> entregam resultado imediato; vendem sozinhos depois de prontos.</li>'+
+        '<li><b class="text-white">Mentoria em grupo:</b> ticket alto, entrega ao vivo, vagas limitadas.</li>'+
+      '</ul>'+
+      '<p>A regra de ouro do empacotamento: <b class="text-white">promessa de transformação + prazo + mecanismo</b>. Compare: “Curso de marketing” contra “Seu primeiro infoproduto vendido em 30 dias com o método Máquina”.</p>'+
+      '<div class="box box-warn"><b>⚠️ Erro comum</b>Criar 120 páginas antes de validar. O MVP de infoproduto é: promessa forte + 20% do conteúdo que gera 80% do resultado. O resto você entrega na próxima versão.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Escreva sua promessa no formato: “Ajudo [quem] a [resultado] em [prazo], mesmo que [objeção]”.</div>'
+  },
+  {
+    label:"Capítulo 4", short:"Oferta irresistível", time:"6 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">A oferta que faz o “vou pensar” virar “comprei” 🎁</h2>'+
+      '<p>Produto é o que você entrega. <b class="text-white">Oferta é como você apresenta</b> — e é ela que vende. A estrutura de 7 camadas:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">1. Promessa:</b> a transformação em uma frase.</li>'+
+        '<li><b class="text-white">2. Dor:</b> descreva o problema melhor que o próprio cliente.</li>'+
+        '<li><b class="text-white">3. Método:</b> dê nome ao seu caminho (ex.: “Método Máquina”).</li>'+
+        '<li><b class="text-white">4. Prova:</b> resultados, depoimentos ou sua história.</li>'+
+        '<li><b class="text-white">5. Bônus:</b> itens que quebram objeções específicas.</li>'+
+        '<li><b class="text-white">6. Garantia:</b> 7 dias incondicional derruba o medo.</li>'+
+        '<li><b class="text-white">7. Ancoragem:</b> mostre o valor cheio antes do preço real.</li>'+
+      '</ul>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>Cada bônus deve matar UMA objeção: “não tenho tempo” → checklist pronto; “não sei começar” → template preenchido. Bônus genérico é peso morto.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Liste as 5 objeções do seu público e crie um bônus para cada uma. Depois monte a oferta nas 7 camadas.</div>'
+  },
+  {
+    label:"Capítulo 5", short:"MVP em 7 dias", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Seu MVP pronto em uma semana ⚡</h2>'+
+      '<p>O plano enxuto, dia a dia:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Dia 1–2 · Esqueleto:</b> sumário com 5 a 8 capítulos. Cada capítulo resolve uma etapa da transformação.</li>'+
+        '<li><b class="text-white">Dia 3–4 · Conteúdo mínimo:</b> escreva ou grave apenas o essencial. Reaproveite posts, respostas e aulas que você já deu.</li>'+
+        '<li><b class="text-white">Dia 5 · Empacotamento:</b> diagramação simples, capa, nome do método.</li>'+
+        '<li><b class="text-white">Dia 6 · Página de vendas:</b> promessa, dor, entrega, bônus, garantia e preço.</li>'+
+        '<li><b class="text-white">Dia 7 · Checkout:</b> crie o link de pagamento em uma plataforma digital e conecte à página.</li>'+
+      '</ul>'+
+      '<div class="box box-warn"><b>⚠️ Erro comum</b>Gastar a semana escolhendo logo, cores e domínio. O MVP precisa de UMA coisa: um link de pagamento funcionando. O resto vem depois da primeira venda.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Marque no calendário os 7 dias e trate como compromisso inadiável. Feito é o novo perfeito.</div>'
+  },
+  {
+    label:"Capítulo 6", short:"Funil básico", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">O funil que vende enquanto você dorme 🌀</h2>'+
+      '<p>Você precisa de três peças funcionando em sequência:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Atração:</b> conteúdo no topo do funil (posts virais e educativos) chamando quem tem a dor.</li>'+
+        '<li><b class="text-white">Captura:</b> uma isca digital gratuita (aula, checklist, capítulo de amostra) em troca do contato.</li>'+
+        '<li><b class="text-white">Conversão:</b> sequência de mensagens apresentando a oferta para quem capturou.</li>'+
+      '</ul>'+
+      '<p>A sequência mínima que funciona: <b class="text-white">entrega da isca → conteúdo de valor → prova social → oferta com prazo</b>. Quatro mensagens, cinco dias.</p>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>Quem baixa sua isca e não compra agora ainda é lead: 60% das vendas de infoproduto acontecem depois do terceiro contato. Nunca pare de nutrir.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Crie hoje sua isca digital: pode ser o capítulo 1 do seu futuro ebook. O importante é ter a porta de entrada aberta.</div>'
+  },
+  {
+    label:"Capítulo 7", short:"O lançamento", time:"6 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Abrindo o carrinho com pico de vendas 🚀</h2>'+
+      '<p>Lançamento é evento — e eventos precisam de preparação, abertura e encerramento:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Semana de aquecimento:</b> conteúdos diários sobre a dor, bastidores da criação e contagem regressiva.</li>'+
+        '<li><b class="text-white">Evento de abertura:</b> live ou aula gratuita que entrega valor e termina com a oferta.</li>'+
+        '<li><b class="text-white">Carrinho aberto:</b> 3 a 7 dias com mensagens diárias: prova, bônus, garantia, perguntas frequentes.</li>'+
+        '<li><b class="text-white">Último dia:</b> escassez real — bônus expira, desconto acaba, carrinho fecha no horário dito.</li>'+
+      '</ul>'+
+      '<div class="box box-warn"><b>⚠️ Erro comum</b>Escassez falsa. Anunciar “últimas horas” e depois reabrir mata a confiança do público — e confiança é o ativo mais caro do mercado digital.</div>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>A maior parte das vendas entra nas primeiras 24 horas e nas últimas 6. Prepare suas melhores mensagens para esses dois picos.</div>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Defina a data de abertura do carrinho para daqui a 14 dias e publique hoje o primeiro post de aquecimento.</div>'
+  },
+  {
+    label:"Capítulo 8", short:"Primeira venda e além", time:"5 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Da primeira venda à escada de valor 🪜</h2>'+
+      '<p>A primeira venda não é o fim — é o começo do relacionamento. O que fazer nos 30 dias seguintes:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">Entregue mais do que prometeu:</b> um material extra inesperado vira depoimento.</li>'+
+        '<li><b class="text-white">Peça prova social:</b> depoimentos e prints de resultado são o combustível do próximo lançamento.</li>'+
+        '<li><b class="text-white">Colha feedback:</b> o que faltou vira o conteúdo da versão 2.0.</li>'+
+        '<li><b class="text-white">Suba a escada:</b> ofereça o próximo degrau — curso, mentoria, comunidade — para quem já comprou.</li>'+
+      '</ul>'+
+      '<p>É mais fácil vender de novo para quem já comprou do que conquistar um cliente novo. A escada de valor transforma um ebook de R$ 27 em um negócio de 5 dígitos.</p>'+
+      '<div class="box box-action"><b>🎯 Ação do capítulo</b>Defina desde já o próximo degrau da escada: qual produto vem depois deste? Escreva o nome e a promessa dele hoje.</div>'
+  },
+  {
+    label:"Bônus 🎁", short:"10 templates de oferta", time:"4 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Bônus: 10 templates de oferta prontos para preencher 🎁</h2>'+
+      '<p>Copie, preencha as lacunas e use no seu nicho:</p>'+
+      '<ul>'+
+        '<li><b class="text-white">1 · Ebook:</b> “Descubra como [resultado] em [prazo], mesmo que [objeção].”</li>'+
+        '<li><b class="text-white">2 · Mini-curso:</b> “Do zero a [conquista] em [n] aulas práticas de 15 minutos.”</li>'+
+        '<li><b class="text-white">3 · Mentoria:</b> “Te acompanho por [tempo] até você [resultado].”</li>'+
+        '<li><b class="text-white">4 · Templates:</b> “Copie os [n] modelos que usei para [resultado].”</li>'+
+        '<li><b class="text-white">5 · Comunidade:</b> “Ambiente + método + networking para [público].”</li>'+
+        '<li><b class="text-white">6 · Workshop:</b> “Uma tarde para sair com [entregável] pronto.”</li>'+
+        '<li><b class="text-white">7 · Desafio:</b> “5 dias para [virada] — grátis para entrar, pago para continuar.”</li>'+
+        '<li><b class="text-white">8 · Assinatura:</b> “Toda semana, [insight] que vale dinheiro na sua caixa de entrada.”</li>'+
+        '<li><b class="text-white">9 · Ferramenta:</b> “Automatize [tarefa chata] em 1 clique.”</li>'+
+        '<li><b class="text-white">10 · Consultoria:</b> “Diagnóstico + plano de ação completo em 1 sessão.”</li>'+
+      '</ul>'+
+      '<div class="box box-insight"><b>💡 Insight da Bia</b>O template que mais vende é sempre o que fala do RESULTADO na primeira linha. Produto é detalhe; transformação é titular.</div>'
+  },
+  {
+    label:"Checklist final", short:"Plano de 30 dias", time:"3 min",
+    html:'<h2 class="font-display font-extrabold text-3xl mb-6">Checklist final: seu plano de 30 dias ✅</h2>'+
+      '<h3>Semana 1 · Fundação</h3>'+
+      '<ul><li>Nicho escolhido (o menor possível)</li><li>Promessa em uma frase</li><li>10 conversas de validação realizadas</li></ul>'+
+      '<h3>Semana 2 · Produto</h3>'+
+      '<ul><li>Sumário de 5 a 8 capítulos</li><li>MVP criado e empacotado</li><li>Nome do método definido</li></ul>'+
+      '<h3>Semana 3 · Oferta</h3>'+
+      '<ul><li>Oferta nas 7 camadas</li><li>5 bônus matando objeções</li><li>Página de vendas + checkout no ar</li></ul>'+
+      '<h3>Semana 4 · Lançamento</h3>'+
+      '<ul><li>Aquecimento publicado diariamente</li><li>Carrinho aberto com escassez real</li><li>Primeira venda celebrada 🎉</li></ul>'+
+      '<div class="box box-action"><b>🎯 Próximo passo</b>Quer executar tudo isso comigo, com acompanhamento, comunidade e templates prontos? Te espero no <b>Infoprodutor Pro</b> — o curso completo da Máquina de Infoprodutos. Nos vemos na Turma 07! 💚</div>'
+  }
+  ];
+
+  /* ================= ESTADO ================= */
+  var idx = lsGet("book_idx", 0);
+  var visited = lsGet("book_visited", [0]);
+  if(idx >= BOOK.length) idx = 0;
+
+  /* ================= RENDER ================= */
+  var chWrap = $("chapters");
+  BOOK.forEach(function(ch, i){
+    var s = document.createElement("section");
+    s.className = "chapter";
+    s.dataset.i = i;
+    s.innerHTML = ch.cover
+      ? ch.html
+      : '<article class="glass p-7 md:p-12"><div class="book-body">'+ch.html+'</article>';
+    chWrap.appendChild(s);
+  });
+
+  var toc = $("tocNav");
+  BOOK.forEach(function(ch, i){
+    var b = document.createElement("button");
+    b.className = "nav-item glass w-full text-left px-4 py-3 flex items-center gap-3";
+    b.innerHTML =
+      '<span class="nv-dot w-2 h-2 rounded-full shrink-0" style="background:rgba(255,255,255,.2)"></span>'+
+      '<span class="flex-1 min-w-0"><b class="block text-[11px] text-emerald-300/80 uppercase tracking-wider">'+ch.label+'</b>'+
+      '<span class="block text-sm text-white/80 truncate">'+ch.short+'</span></span>'+
+      (ch.time ? '<span class="text-[10px] text-white/35 shrink-0">⏱ '+ch.time+'</span>' : '');
+    b.onclick = function(){ go(i); };
+    toc.appendChild(b);
+  });
+
+  function go(i){
+    idx = Math.max(0, Math.min(BOOK.length-1, i));
+    document.querySelectorAll(".chapter").forEach(function(c){
+      c.classList.toggle("active", +c.dataset.i === idx);
+    });
+    document.querySelectorAll(".nav-item").forEach(function(n, j){
+      n.classList.toggle("active", j === idx);
+      if(visited.indexOf(j) > -1) n.classList.add("visited");
+    });
+    if(visited.indexOf(idx) < 0){ visited.push(idx); }
+    lsSet("book_visited", visited); lsSet("book_idx", idx);
+
+    var pct = Math.round(((idx+1)/BOOK.length)*100);
+    $("progBar").style.width = pct+"%";
+    $("progTxt").textContent = pct+"% lido";
+    $("pageInfo").textContent = (idx+1)+" / "+BOOK.length;
+    $("btnPrev").style.visibility = idx === 0 ? "hidden" : "visible";
+    $("btnNext").textContent = idx === BOOK.length-1 ? "↺ Reler do início" : "Próximo →";
+
+    var navEl = document.querySelectorAll(".nav-item")[idx];
+    if(navEl && navEl.scrollIntoView) navEl.scrollIntoView({block:"nearest"});
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  $("btnPrev").onclick = function(){ go(idx-1); };
+  $("btnNext").onclick = function(){
+    if(idx === BOOK.length-1){ toast("📗 Leitura concluída! Agora é executar. 🚀"); go(0); }
+    else go(idx+1);
+  };
+  document.addEventListener("keydown", function(e){
+    if(e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+    if(e.key === "ArrowRight") go(idx+1);
+    if(e.key === "ArrowLeft")  go(idx-1);
+  });
+
+  /* ---------- salvar PDF ---------- */
+  $("btnPrint").onclick = function(){
+    toast("🖨️ Gerando PDF — escolha “Salvar como PDF” na janela de impressão.");
+    setTimeout(function(){ window.print(); }, 600);
+  };
+
+  /* ---------- boot ---------- */
+  go(idx);
+  if(idx > 0) toast("📖 Continuando de onde você parou: " + BOOK[idx].label);
+})();
+</script>
+</body>
+</html>

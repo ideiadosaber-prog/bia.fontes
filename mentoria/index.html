@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Digital · Mentoria — Bia Fontes 👑</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/sora@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/index.css">
+<style>
+  :root{ --bg:#08060f; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+         --vio:#a78bfa; --gold:#fbbf24; --em:#34d399; }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:#f1edff;overflow-x:hidden}
+  h1,h2,h3,.font-display{font-family:'Sora',sans-serif}
+  ::selection{background:var(--vio);color:#1b0f3a}
+  .blob{position:fixed;border-radius:9999px;filter:blur(100px);pointer-events:none;z-index:0;animation:drift 16s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(70px,-50px) scale(1.18)}}
+  .glass{background:var(--card);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:1.5rem}
+  .grad-text{background:linear-gradient(90deg,var(--vio),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn-gold{background:linear-gradient(90deg,#fbbf24,#f59e0b);color:#221503;transition:transform .2s,box-shadow .2s}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(251,191,36,.4)}
+  .btn-vio{background:linear-gradient(90deg,#a78bfa,#8b5cf6);color:#1b0f3a;transition:transform .2s,box-shadow .2s}
+  .btn-vio:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(167,139,250,.45)}
+  .btn-ghost{border:1px solid var(--line);transition:all .2s}
+  .btn-ghost:hover{background:rgba(255,255,255,.07)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp .7s ease both}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .floaty{animation:floaty 5.5s ease-in-out infinite}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+  .pop{animation:pop .35s ease}
+  .faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+  .faq-item.open .faq-body{grid-template-rows:1fr}
+  .faq-item.open .faq-chev{transform:rotate(180deg)}
+  .faq-chev{transition:transform .3s}
+  .modal-overlay{opacity:0;pointer-events:none;transition:opacity .25s}
+  .modal-overlay.show{opacity:1;pointer-events:auto}
+  .modal-box{transform:translateY(24px) scale(.97);transition:transform .3s}
+  .modal-overlay.show .modal-box{transform:translateY(0) scale(1)}
+  #toast{transform:translateY(120%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  #toast.show{transform:translateY(0)}
+  .phase-line{position:relative}
+  .phase-line::before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--vio),var(--gold));opacity:.4}
+  .sess-dot{width:32px;height:32px;border-radius:9999px;display:grid;place-items:center;font-size:11px;font-weight:800;flex-shrink:0;position:relative;z-index:1;background:linear-gradient(135deg,#a78bfa,#fbbf24);color:#1b0f3a}
+  select option{background:#12101c;color:#fff}
+</style>
+</head>
+<body class="min-h-screen">
+
+<div class="blob w-[26rem] h-[26rem] bg-violet-700" style="top:-100px;left:-120px;opacity:.22"></div>
+<div class="blob w-[30rem] h-[30rem] bg-amber-500" style="bottom:-160px;right:-140px;opacity:.12;animation-delay:-6s"></div>
+<div class="blob w-80 h-80 bg-fuchsia-600" style="top:45%;left:48%;opacity:.12;animation-delay:-11s"></div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#08060f]/75 border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3 min-w-0">
+      <span class="w-10 h-10 rounded-xl btn-vio grid place-items-center text-xl shrink-0">👑</span>
+      <div class="min-w-0">
+        <p class="font-display font-bold leading-tight truncate">Elite Digital</p>
+        <p class="text-[11px] text-violet-300/80 truncate">mentoria premium · Turma 03 · 20 vagas</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="../" class="btn-ghost rounded-full px-4 py-2 text-xs text-white/70">← Voltar ao site</a>
+      <button id="btnDl" class="btn-ghost rounded-full px-4 py-2 text-xs text-violet-300" title="Baixar esta página">⬇️ Baixar</button>
+      <button class="btn-gold rounded-full px-5 py-2 text-sm font-bold" data-apply>Aplicar</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 pt-14 pb-16 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
+  <div class="fade-up">
+    <span class="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-violet-300">
+      👑 Acompanhamento premium · <span class="text-white/50">grupo de apenas 20 pessoas</span>
+    </span>
+    <h1 class="mt-5 text-4xl md:text-5xl font-extrabold leading-[1.12]">
+      12 semanas comigo, do diagnóstico ao <span class="grad-text">primeiro lançamento de 6 dígitos</span>.
+    </h1>
+    <p class="mt-5 text-white/60 max-w-xl leading-relaxed">
+      A <b class="text-white">Elite Digital</b> é minha mentoria mais próxima: encontros semanais ao vivo, análise individual do seu funil e um grupo seleto para escalar seu negócio digital.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-8">
+      <button class="btn-gold rounded-full px-8 py-3.5 font-bold" data-apply>Quero aplicar para a Turma 03 →</button>
+      <a href="#jornada" class="btn-ghost rounded-full px-7 py-3.5 text-sm text-white/85">Ver a jornada</a>
+    </div>
+    <div class="glass p-5 mt-9 max-w-md">
+      <div class="flex justify-between text-xs text-white/50 mb-2">
+        <span>Vagas preenchidas</span><span><b class="text-amber-300" id="vagasTxt">13 / 20</b></span>
+      </div>
+      <div style="height:8px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden">
+        <div id="vagasBar" style="height:100%;width:65%;background:linear-gradient(90deg,#a78bfa,#fbbf24);border-radius:9999px;transition:width 1s"></div>
+      </div>
+      <p class="text-[11px] text-white/40 mt-2">Restam <b class="text-amber-300">7 vagas</b> · aplicações analisadas em até 48h</p>
+    </div>
+  </div>
+  <div class="fade-up relative" style="animation-delay:.15s">
+    <div class="glass p-3 floaty">
+      <img src="https://image.qwenlm.ai/public_source/663f602e-79cd-401f-9708-153b858c6cd8/13e99972f-712e-4156-a46b-6d6d78854f3a.png"
+           alt="Encontros da mentoria Elite Digital" class="w-full rounded-2xl object-cover aspect-[4/3]">
+    </div>
+    <div class="absolute -left-2 top-8 glass px-4 py-2.5 text-xs floaty" style="animation-delay:-2s">🎥 <b class="text-violet-300">12 encontros</b> ao vivo</div>
+    <div class="absolute -right-2 bottom-10 glass px-4 py-2.5 text-xs floaty" style="animation-delay:-3.5s">🔍 <b class="text-amber-300">Análise individual</b> do seu funil</div>
+  </div>
+</section>
+
+<!-- O QUE INCLUI -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 pb-16">
+  <div class="text-center mb-8">
+    <p class="text-xs uppercase tracking-widest text-violet-300">💎 O que você recebe</p>
+    <h2 class="font-display font-extrabold text-3xl md:text-4xl mt-2">Proximidade que curso nenhum entrega</h2>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="glass p-6"><p class="text-3xl">🎥</p><h3 class="font-bold mt-3">12 encontros ao vivo</h3><p class="text-xs text-white/55 mt-2 leading-relaxed">Toda semana, um tema da jornada + espaço aberto para perguntas sobre o SEU caso.</p></div>
+    <div class="glass p-6"><p class="text-3xl">🔍</p><h3 class="font-bold mt-3">Auditoria do seu funil</h3><p class="text-xs text-white/55 mt-2 leading-relaxed">Análise individual da sua página, oferta e tráfego com plano de correção.</p></div>
+    <div class="glass p-6"><p class="text-3xl">🤝</p><h3 class="font-bold mt-3">Grupo VIP</h3><p class="text-xs text-white/55 mt-2 leading-relaxed">Máximo 20 pessoas: networking, parcerias e respostas diretas minhas.</p></div>
+    <div class="glass p-6"><p class="text-3xl">📂</p><h3 class="font-bold mt-3">Biblioteca Elite</h3><p class="text-xs text-white/55 mt-2 leading-relaxed">Templates de lançamento, scripts de live e planilhas de métricas usadas por mim.</p></div>
+  </div>
+</section>
+
+<!-- JORNADA -->
+<section id="jornada" class="relative z-10 max-w-4xl mx-auto px-5 pb-16">
+  <div class="text-center mb-10">
+    <p class="text-xs uppercase tracking-widest text-violet-300">🗺️ A jornada de 12 semanas</p>
+    <h2 class="font-display font-extrabold text-3xl md:text-4xl mt-2">4 fases, 12 encontros</h2>
+  </div>
+  <div id="journeyWrap" class="space-y-10"></div>
+</section>
+
+<!-- MENTORA -->
+<section class="relative z-10 max-w-4xl mx-auto px-5 pb-16">
+  <div class="glass p-7 md:p-10 flex flex-col md:flex-row items-center gap-8">
+    <img src="https://image.qwenlm.ai/public_source/fd7bd726-1449-4f74-ab7a-dbbc0e4c8e45/1bf7dfc03-e0aa-4b06-9596-d141f820a9d4.png"
+         alt="Bia Fontes" class="w-28 h-28 rounded-full object-cover object-top border-4 border-violet-400/60 shrink-0">
+    <div class="text-center md:text-left">
+      <p class="text-xs uppercase tracking-widest text-violet-300">👑 Sua mentora</p>
+      <h2 class="font-display font-extrabold text-2xl mt-1">Bia Fontes</h2>
+      <p class="text-sm text-white/60 mt-3 leading-relaxed">Criadora do método Máquina de Infoprodutos, já acompanhou mais de 3.200 alunos e gerou R$ 1,2 mi em lançamentos. Na Elite Digital, ela sai do palco e senta ao seu lado: são 12 semanas de acompanhamento real, no seu projeto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section class="relative z-10 max-w-3xl mx-auto px-5 pb-16">
+  <div class="glass p-8 md:p-10 text-center" style="border-color:rgba(167,139,250,.4);box-shadow:0 0 50px rgba(167,139,250,.14)">
+    <p class="text-xs uppercase tracking-widest text-violet-300">💳 Investimento · Turma 03</p>
+    <p class="text-white/40 line-through mt-5">De R$ 3.500</p>
+    <p class="font-display font-extrabold text-5xl grad-text mt-1">R$ 1.997</p>
+    <p class="text-sm text-white/55 mt-2">ou 12x de R$ 197 no cartão</p>
+    <button class="btn-gold rounded-full px-10 py-4 font-display font-extrabold text-lg mt-7" data-apply>Aplicar para uma das 7 vagas →</button>
+    <p class="text-[11px] text-white/35 mt-4">A aplicação não garante a vaga: analisamos cada caso para montar um grupo que evolui junto.</p>
+    <div class="flex flex-wrap justify-center gap-4 mt-6 text-xs text-white/50">
+      <span>🔒 Garantia de 7 dias</span><span>🎥 Gravações disponíveis</span><span>📜 Certificado Elite</span>
+    </div>
+  </div>
+</section>
+
+<!-- CRITÉRIOS -->
+<section class="relative z-10 max-w-4xl mx-auto px-5 pb-16">
+  <div class="glass p-7">
+    <h2 class="font-display font-bold text-lg mb-4">🧐 Quem costuma ser aprovado?</h2>
+    <ul class="grid sm:grid-cols-2 gap-3 text-sm text-white/70">
+      <li class="flex gap-3"><span class="text-violet-300">✦</span> Quem já validou uma ideia (ou está a uma conversa disso)</li>
+      <li class="flex gap-3"><span class="text-violet-300">✦</span> Quem tem pelo menos 3h/semana para executar</li>
+      <li class="flex gap-3"><span class="text-violet-300">✦</span> Quem quer escalar com método, não com sorte</li>
+      <li class="flex gap-3"><span class="text-violet-300">✦</span> Quem contribui com o grupo, não só consome</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="relative z-10 max-w-3xl mx-auto px-5 pb-24">
+  <div class="text-center mb-8">
+    <p class="text-xs uppercase tracking-widest text-violet-300">❓ Perguntas frequentes</p>
+    <h2 class="font-display font-extrabold text-3xl mt-2">Antes de aplicar, leia isso</h2>
+  </div>
+  <div class="space-y-3" id="faqWrap"></div>
+</section>
+
+<footer class="relative z-10 border-t border-white/10 py-8 text-center text-xs text-white/40 px-5">
+  <p><b class="text-white/70">Elite Digital</b> · mentoria premium da Bia Fontes 👑💜</p>
+  <p class="mt-1"><a href="../" class="text-violet-300/70 hover:text-violet-300 transition">← voltar para a página inicial</a></p>
+</footer>
+
+<!-- MODAL APLICAÇÃO -->
+<div id="modal" class="modal-overlay fixed inset-0 z-50 grid place-items-center p-4 bg-black/70 backdrop-blur-sm">
+  <div class="modal-box glass w-full max-w-md p-7 relative">
+    <button id="modalClose" class="absolute top-4 right-4 w-9 h-9 rounded-full btn-ghost grid place-items-center text-white/70">✕</button>
+    <div id="modalForm">
+      <p class="text-xs uppercase tracking-widest text-violet-300">Aplicação · Turma 03</p>
+      <h3 class="font-display font-bold text-xl mt-1">Conte um pouco sobre você</h3>
+      <div class="space-y-3 mt-6">
+        <input id="aName" type="text" placeholder="Seu nome" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition">
+        <input id="aEmail" type="email" placeholder="Seu melhor e-mail" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition">
+        <select id="aNiche" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400">
+          <option value="">Seu nicho…</option>
+          <option>Infoprodutos / educação</option><option>Saúde e fitness</option><option>Finanças</option>
+          <option>Beleza e moda</option><option>Tecnologia</option><option>Outro</option>
+        </select>
+        <select id="aRev" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400">
+          <option value="">Faturamento digital atual…</option>
+          <option>Ainda não faturei</option><option>Até R$ 1 mil/mês</option><option>R$ 1 a 5 mil/mês</option>
+          <option>R$ 5 a 10 mil/mês</option><option>Acima de R$ 10 mil/mês</option>
+        </select>
+        <textarea id="aGoal" rows="2" placeholder="Qual seu maior objetivo em 12 semanas?" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 resize-none"></textarea>
+      </div>
+      <button id="aConfirm" class="btn-vio w-full rounded-xl py-3.5 font-bold mt-5">Enviar aplicação 👑</button>
+      <p class="text-[11px] text-white/35 mt-3 text-center">Resposta em até 48h no seu e-mail.</p>
+    </div>
+    <div id="modalOk" class="hidden text-center py-6">
+      <div class="text-5xl mb-4">👑</div>
+      <h3 class="font-display font-bold text-xl">Aplicação recebida!</h3>
+      <p class="text-sm text-white/55 mt-2">Vamos analisar seu perfil e responder em até 48h. Fique de olho no e-mail (e no spam).</p>
+      <button id="mOkBtn" class="btn-gold rounded-full px-8 py-3 font-bold mt-6">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass px-5 py-3 text-sm font-medium text-violet-200"></div>
+
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+
+  var toastTimer;
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
+  }
+
+  /* ---------- jornada ---------- */
+  var PHASES = [
+    {ph:"Fase 1 · Diagnóstico", weeks:"Semanas 1–3", items:[
+      {n:1, t:"Diagnóstico individual", d:"Onde seu negócio está travado hoje — mapa completo do seu cenário."},
+      {n:2, t:"Mapa de valor", d:"Seu conhecimento transformado em produtos com potencial real de venda."},
+      {n:3, t:"Posicionamento único", d:"O que te diferencia — e como comunicar isso em uma frase."}
+    ]},
+    {ph:"Fase 2 · Oferta", weeks:"Semanas 4–6", items:[
+      {n:4, t:"Oferta nas 7 camadas", d:"Montagem da sua oferta irresistível, bônus por bônus."},
+      {n:5, t:"Página de vendas", d:"Revisão ao vivo da sua página com correções de copy."},
+      {n:6, t:"Preço, upsell e garantia", d:"Estratégia de ticket para maximizar cada venda."}
+    ]},
+    {ph:"Fase 3 · Atração", weeks:"Semanas 7–9", items:[
+      {n:7, t:"Funil completo", d:"Da atração à conversão: o caminho inteiro desenhado."},
+      {n:8, t:"Tráfego sob medida", d:"Orgânico + pago: onde investir sua energia e seu dinheiro."},
+      {n:9, t:"Captura e nutrição", d:"Sequência de mensagens que transforma lead em comprador."}
+    ]},
+    {ph:"Fase 4 · Lançamento & Escala", weeks:"Semanas 10–12", items:[
+      {n:10, t:"Plano de lançamento", d:"Cronograma dia a dia do seu lançamento supervisionado."},
+      {n:11, t:"Carrinho aberto", d:"Acompanhamento em tempo real durante suas vendas."},
+      {n:12, t:"Métricas e próximos passos", d:"Leitura dos números + plano dos próximos 6 meses."}
+    ]}
+  ];
+  var jw = $("journeyWrap");
+  PHASES.forEach(function(p){
+    var block = document.createElement("div");
+    var rows = p.items.map(function(s){
+      return '<div class="flex items-start gap-4 mb-4">'+
+        '<span class="sess-dot">'+s.n+'</span>'+
+        '<div class="glass flex-1 p-4"><p class="font-semibold text-sm">'+s.t+'</p><p class="text-xs text-white/50 mt-1 leading-relaxed">'+s.d+'</p></div>'+
+      '</div>';
+    }).join("");
+    block.innerHTML =
+      '<div class="flex items-baseline justify-between mb-4 flex-wrap gap-2">'+
+        '<h3 class="font-display font-bold text-lg grad-text">'+p.ph+'</h3>'+
+        '<span class="text-[11px] text-white/40">'+p.weeks+'</span>'+
+      '</div>'+
+      '<div class="phase-line">'+rows+'</div>';
+    jw.appendChild(block);
+  });
+
+  /* ---------- FAQ ---------- */
+  var FAQS = [
+    {q:"Preciso já estar faturando para aplicar?", a:"Não. Aceitamos desde quem ainda não faturou — o diagnóstico inicial serve justamente para definir o ponto de partida e o plano adequado."},
+    {q:"Os encontros ficam gravados?", a:"Sim. Todas as sessões ficam gravadas na Biblioteca Elite para você rever quando quiser."},
+    {q:"Quanto tempo preciso dedicar por semana?", a:"O encontro dura cerca de 1h30. Recomendamos mais 2h de execução semanal para aproveitar de verdade a auditoria e o plano."},
+    {q:"Por que existe processo de aplicação?", a:"Para manter o grupo pequeno e comprometido. A mentoria funciona melhor quando todos estão em momento parecido de execução."},
+    {q:"E se eu entrar e não gostar?", a:"Garantia de 7 dias após o primeiro encontro: devolvemos 100% do investimento, sem perguntas."}
+  ];
+  var fw = $("faqWrap");
+  FAQS.forEach(function(f){
+    var item = document.createElement("div");
+    item.className = "faq-item glass overflow-hidden";
+    item.innerHTML =
+      '<button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left">'+
+        '<span class="font-semibold text-sm md:text-base">'+f.q+'</span>'+
+        '<span class="faq-chev text-violet-300 shrink-0">▾</span>'+
+      '</button>'+
+      '<div class="faq-body"><p class="px-5 pb-5 text-sm text-white/60 leading-relaxed">'+f.a+'</p></div>';
+    item.querySelector(".faq-btn").onclick = function(){ item.classList.toggle("open"); };
+    fw.appendChild(item);
+  });
+
+  /* ---------- modal ---------- */
+  function openModal(){
+    $("modalForm").classList.remove("hidden");
+    $("modalOk").classList.add("hidden");
+    ["aName","aEmail","aGoal"].forEach(function(id){ $(id).value = ""; });
+    $("aNiche").selectedIndex = 0; $("aRev").selectedIndex = 0;
+    $("modal").classList.add("show");
+  }
+  function closeModal(){ $("modal").classList.remove("show"); }
+  document.querySelectorAll("[data-apply]").forEach(function(b){ b.onclick = openModal; });
+  $("modalClose").onclick = closeModal;
+  $("mOkBtn").onclick = closeModal;
+  $("modal").addEventListener("click", function(e){ if(e.target === $("modal")) closeModal(); });
+  $("aConfirm").onclick = function(){
+    var nm = $("aName").value.trim(), em = $("aEmail").value.trim();
+    if(nm.length < 3){ toast("⚠️ Digite seu nome."); $("aName").focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ toast("⚠️ Digite um e-mail válido."); $("aEmail").focus(); return; }
+    if(!$("aNiche").value){ toast("⚠️ Selecione seu nicho."); $("aNiche").focus(); return; }
+    $("modalForm").classList.add("hidden");
+    $("modalOk").classList.remove("hidden");
+    toast("👑 Aplicação enviada com sucesso!");
+  };
+
+  /* ---------- download da página ---------- */
+  $("btnDl").onclick = function(){
+    var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "index.html";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    toast("⬇️ Página baixada! Salve em mentoria/index.html no repositório.");
+  };
+
+  /* ---------- vagas (animação inicial) ---------- */
+  setTimeout(function(){ $("vagasBar").style.width = "65%"; }, 300);
+})();
+</script>
+</body>
+</html>
